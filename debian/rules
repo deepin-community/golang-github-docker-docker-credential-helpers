@@ -1,4 +1,17 @@
 #!/usr/bin/make -f
 
+# Prevent pass and secretservice from being built as /usr/bin/cmd
+export DH_GOLANG_EXCLUDES := pass/cmd secretservice/cmd
+export DH_GOLANG_EXCLUDES_ALL := 0
+
 %:
-	dh $@
+	dh $@ --builddirectory=_build --buildsystem=golang --with=golang
+
+execute_after_dh_auto_build:
+	GOPATH=$(shell pwd)/_build \
+	GOCACHE=$(shell pwd)/_build/go-build \
+	GO111MODULE=off \
+		$(MAKE) pass secretservice
+
+execute_after_dh_auto_clean:
+	rm -rf bin

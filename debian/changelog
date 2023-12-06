@@ -1,5 +1,142 @@
-template-repository (1.0-1) unstable; urgency=medium
+golang-github-docker-docker-credential-helpers (0.6.4+ds1-1) unstable; urgency=medium
 
-  * Initial release
+  * New upstream version 0.6.4+ds1
+  * Build-Depends += golang-golang-x-sys-dev
+  * Adjust d/clean for files renamed upstream
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Arnaud Rebillout <arnaudr@kali.org>  Mon, 13 Sep 2021 18:16:02 +0700
+
+golang-github-docker-docker-credential-helpers (0.6.3-4) unstable; urgency=medium
+
+  * Fix build issue with Go 1.16 where GO111MODULE defaults to on.
+    Apply patch from 0.6.3-1ubuntu1 (2021-02-25) to "Set GO111MODULE
+    to 'off' while building binaries to fix build with Go 1.16."
+    Thanks to Michael Hudson-Doyle for the fix!
+  * Add "Depends: gnome-keyring" to the golang-docker-credential-helpers
+    program package to prevent docker-credential-secretservice invocation
+    failure.  Thanks to Alessandro Ogier for the report! (Closes: #884596)
+  * Remove hardcoded Depends on libsecret-1-0 from program package
+    as this dependency is automatically handled by ${shlibs:Depends}
+  * Remove unnecessary "Depends: golang-any" from library package
+  * Bump debhelper dependency to "Build-Depends: debhelper-compat (= 13)"
+  * Simplify debian/rules with --builddirectory=_build and execute_after_X
+  * debian/rules: Set DH_GOLANG_EXCLUDES to {pass,secretservice}/cmd
+    to prevent pass and secretservice from being built as /usr/bin/cmd
+  * Change Section from devel to golang
+  * Add myself to the list of Uploaders
+  * Add "Rules-Requires-Root: no" to debian/control
+  * Mark library package with "Multi-Arch: foreign"
+  * Update debian/watch to version 4 and what dh-make-golang 0.5.0 would
+    generate, so that uscan can detect new version on GitHub again, and
+    so that it adds the +ds1 suffix for repacked upstream tarball
+    due to "vendor" directory removal
+
+ -- Anthony Fok <foka@debian.org>  Wed, 08 Sep 2021 01:07:56 -0600
+
+golang-github-docker-docker-credential-helpers (0.6.3-3) unstable; urgency=medium
+
+  * Team upload.
+  * Bump Standards version to 4.6.0, no changes needed.
+
+ -- Reinhard Tartler <siretart@tauware.de>  Sat, 04 Sep 2021 22:36:32 +0200
+
+golang-github-docker-docker-credential-helpers (0.6.3-2) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+  * Update standards version to 4.4.1, no changes needed.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 21 Aug 2021 11:32:05 +0100
+
+golang-github-docker-docker-credential-helpers (0.6.3-1) unstable; urgency=medium
+
+  * Build the pass helper (thx anarcat) (Closes: #929176).
+  * Suggests pass.
+  * New upstream version 0.6.3.
+  * Drop patches applied upstream.
+
+ -- Arnaud Rebillout <arnaud.rebillout@collabora.com>  Fri, 07 Feb 2020 11:46:40 +0700
+
+golang-github-docker-docker-credential-helpers (0.6.1-4) unstable; urgency=high
+
+  * Team upload.
+
+  [ Shengjing Zhu ]
+  * Update maintainer address to team+pkg-go@tracker.d.o
+
+  [ Anthony Fok ]
+  * Bump debhelper dependency to "Build-Depends: debhelper-compat (= 12)"
+  * Bump Standards-Version to 4.4.0 (no change)
+  * Set GOCACHE to go-build directory inside builddir
+    for the extra build command outside of dh-golang's control
+    to avoid build error with buildd running sbuild.
+
+ -- Anthony Fok <foka@debian.org>  Mon, 05 Aug 2019 19:17:18 -0600
+
+golang-github-docker-docker-credential-helpers (0.6.1-3) unstable; urgency=medium
+
+  * Add myself to uploaders.
+  * Add upstream patch to fix CVE-2019-1020014 (Closes: #933801).
+
+ -- Arnaud Rebillout <arnaud.rebillout@collabora.com>  Mon, 05 Aug 2019 15:04:28 +0700
+
+golang-github-docker-docker-credential-helpers (0.6.1-2) unstable; urgency=medium
+
+  * Team upload.
+  * Add patch to fix an invalid free (Closes: #922428).
+
+ -- Arnaud Rebillout <arnaud.rebillout@collabora.com>  Thu, 28 Feb 2019 08:31:29 +0700
+
+golang-github-docker-docker-credential-helpers (0.6.1-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * d/compat=11.
+
+ -- Dmitry Smirnov <onlyjob@debian.org>  Sun, 01 Jul 2018 15:42:28 +1000
+
+golang-github-docker-docker-credential-helpers (0.6.0-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Alexandre Viau ]
+  * Point Vcs-* urls to salsa.debian.org.
+
+  [ Dmitry Smirnov ]
+  * New upstream release (Closes: #862192).
+  * Removed obsolete "32bit_fix.patch".
+  * Testsuite: autopkgtest-pkg-go
+  * Standards-Version: 4.1.4; Priority: optional
+  * debhelper to version 11; compat to version 10.
+
+ -- Dmitry Smirnov <onlyjob@debian.org>  Thu, 14 Jun 2018 00:41:08 +1000
+
+golang-github-docker-docker-credential-helpers (0.5.0-2) unstable; urgency=medium
+
+  * Attempt to fix 32bit builds by reducing the slice conversion
+    (closes: #854872).
+
+ -- Jordi Mallach <jordi@debian.org>  Tue, 09 May 2017 00:03:09 +0200
+
+golang-github-docker-docker-credential-helpers (0.5.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add watch file.
+  * Depend on golang-any instead of golang-go.
+  * Exclude vendor/ via Files-Excluded in copyright.
+  * Add myself as an Uploader.
+
+ -- Jordi Mallach <jordi@debian.org>  Fri, 24 Mar 2017 10:43:02 +0100
+
+golang-github-docker-docker-credential-helpers (0.3.0+git20160906.22.f72c04f-1) unstable; urgency=medium
+
+  * New upstream snapshot.
+
+ -- Tim Potter <tpot@hpe.com>  Mon, 19 Dec 2016 13:16:30 +1100
+
+golang-github-docker-docker-credential-helpers (0.3.0+git20160601.0.5128fa1-1) unstable; urgency=medium
+
+  * Initial release (Closes: #846309)
+
+ -- Tim Potter <tpot@hpe.com>  Wed, 30 Nov 2016 15:11:29 +1100
